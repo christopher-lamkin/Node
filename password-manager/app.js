@@ -89,29 +89,31 @@ function getAccount (accountName, masterPassword) {
 			matchedAccount = accounts[i];
 		}
 	}
-	// accounts.forEach(function (account) {
-	// 	if (account.name === accountName) {
-	// 		matchedAccount = account;
-	// 	}
-	// });
 	return matchedAccount;
 }
 
 if (command === 'create') {
-	var createdAccount = createAccount({
-		name: argv.name,
-		username: argv.username,
-		password: argv.password
-	}, argv.masterPassword);
-	console.log('Account created!');
-	console.log(createdAccount);
+	try {
+		var createdAccount = createAccount({
+			name: argv.name,
+			username: argv.username,
+			password: argv.password
+		}, argv.masterPassword);
+		console.log('Account created!');
+		console.log(createdAccount);
+	} catch(e) {
+		console.log('Unable to create account.');
+	}
 } else if (command === 'get') {
-	var fetchedAccount = getAccount(argv.name, argv.masterPassword);
-
-	if (typeof fetchedAccount === 'undefined') {
-		console.log('Account not found');
-	} else {
-		console.log('Account found!');
-		console.log(fetchedAccount);
+	try {
+		var fetchedAccount = getAccount(argv.name, argv.masterPassword);
+		if (typeof fetchedAccount === 'undefined') {
+			console.log('Account not found');
+		} else {
+			console.log('Account found!');
+			console.log(fetchedAccount);
+		}
+	} catch(e) {
+		console.log('Unable to get account.');
 	}
 }
