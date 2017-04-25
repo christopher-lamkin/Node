@@ -1,8 +1,12 @@
 var request = require('request');
-var encodedLocation = 'Philadelphia';
-var url = 'http://api.openweathermap.org/data/2.5/weather?appid=f2c20dc0a7b03b6941785435b7532b7c&q=' + encodedLocation + '&units=imperial';
 
-module.exports = function(callback){
+module.exports = function(location, callback){
+  var encodedLocation = encodeURIComponent(location);
+  var url = 'http://api.openweathermap.org/data/2.5/weather?appid=f2c20dc0a7b03b6941785435b7532b7c&q=' + encodedLocation + '&units=imperial';
+  if (!location) {
+    return callback('No location provided');
+  }
+
   request({
     url: url,
     json: true
@@ -10,7 +14,6 @@ module.exports = function(callback){
     if (error) {
       callback('Unable to fetch weather');
     } else {
-      // console.log(JSON.stringify(body, null, 4))
       callback("It is " + body.main.temp + " degrees in " + body.name + "!");
     }
   });
