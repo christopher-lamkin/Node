@@ -21,8 +21,8 @@ if (typeof argv.l === 'string' && argv.l.length > 0){
   location().then(function(location){
     weather(location.city).then(function(currentWeather){
       console.log(currentWeather);
-    }, function(error){
-      console.log('unable to guess location!');
+    }).catch(function(error){
+      console.log(error);
     });
   });
 }
